@@ -7,5 +7,5 @@ const dotenv = require('dotenv');
 dotenv.config({ path: 'backend/config/config.env' })
 
 app.listen(process.env.port, () => {
-    console.log(`Server started on port: ${process.env.port}`);
+    console.log(`Backend Server started on port: ${process.env.port}`);
 })
