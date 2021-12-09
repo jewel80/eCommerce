@@ -1,5 +1,5 @@
 const Mongoose = require('mongoose');
-// var app = require('mongoose');
+
 
 
 const productSchema = new Mongoose.Schema({
