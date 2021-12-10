@@ -1,8 +1,8 @@
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 
-const productSchema = new Mongoose.Schema({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'please enter product name'],
@@ -82,6 +82,11 @@ const productSchema = new Mongoose.Schema({
             required: true
         },
     }],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -90,4 +95,4 @@ const productSchema = new Mongoose.Schema({
 
 
 
-module.exports = Mongoose.model('product', productSchema);
+module.exports = mongoose.model('product', productSchema);
