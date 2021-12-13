@@ -22,7 +22,7 @@ exports.registerUser = catchAsynErrors(async(req, res, next) => {
     sendToken(user, 200, res)
 })
 
-//Login User => /a[i/v1/login]
+//Login User => /api/v1/login
 exports.loginUser = catchAsynErrors(async(req, res, next) => {
     const { email, password } = req.body;
 
@@ -158,7 +158,27 @@ exports.updatePassword = catchAsynErrors(async(req, res, next) => {
 
 })
 
-//Logout User => /a/v1/logout]
+//Update user profile => /api/v1/me/update
+exports.updateProfile = catchAsynErrors(async (req, res, next) => {
+
+    const newuserData = {
+        name: req.body.name,
+        email: req.body.email,
+    }
+
+    //update avatat: TODO
+    const user = await User.findByIdAndUpdate(req.user.id, newuserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+    res.status(200).json({
+      success: true
+    });
+});
+
+//Logout User => /api/v1/logout]
 exports.logout = catchAsynErrors(async(req, res, next) => {
 
     res.cookie('token', null, {
@@ -170,5 +190,87 @@ exports.logout = catchAsynErrors(async(req, res, next) => {
         success: true,
         message: 'Logged out'
     })
+
+})
+
+
+//Admin Routes
+
+//Get all Users  => /api/v1/admin/users
+exports.allUsers = catchAsynErrors(async(req, res, next) => {
+
+    const users = await User.find();
+
+    res.status(200).json({
+      success: true,
+      users,
+    });
+
+})
+
+//Get User Details => /api/v1/admin/user/:id
+exports.getUserDeatils = catchAsynErrors(async(req, res, next) => {
+
+    const user = await User.findById(req.params.id);
+
+    if(!user){
+        return next(
+          new ErrorHandler(
+            `User dose not found with id: ${req.params.id} `,
+            500
+          )
+        );
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+
+})
+
+
+//Update user profile => /api/v1/admin/user/:id
+exports.updateUser = catchAsynErrors(async (req, res, next) => {
+
+    const newuserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+
+    //update avatat: TODO
+    const user = await User.findByIdAndUpdate(req.params.id, newuserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+    res.status(200).json({
+      success: true
+    });
+});
+
+
+//Get User Details => /api/v1/admin/user/:id
+exports.DeleteUser = catchAsynErrors(async(req, res, next) => {
+
+    const user = await User.findById(req.params.id);
+
+    await user.remove();
+
+    if(!user){
+        return next(
+          new ErrorHandler(
+            `User dose not found with id: ${req.params.id} `,
+            500
+          )
+        );
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
 
 })
