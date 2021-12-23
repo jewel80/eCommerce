@@ -1,35 +1,30 @@
 import axios from 'axios';
-
 import {
-    ALL_PRODUCTS_REQUEST,
-    ALL_PRODUCTS_SUCCESS,
-    ALL_PRODUCTS_FAIL,
-
-    PRODUCT_DETAILS_REQUEST,
-    PRODUCT_DETAILS_SUCCESS,
-    PRODUCT_DETAILS_FAIL,
-
-    CLEAR_ERRORS
+    ALL_PRODUCTS_FAIL, ALL_PRODUCTS_REQUEST,
+    ALL_PRODUCTS_SUCCESS, CLEAR_ERRORS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST,
+    PRODUCT_DETAILS_SUCCESS
 } from '../constants/productConstants';
 
-export const getProducts = () => async(dispatch) => {
+
+export const getProducts =
+  (currentPage = 1) =>
+  async (dispatch) => {
     try {
-        dispatch({ type: ALL_PRODUCTS_REQUEST })
+      dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-        const { data } = await axios.get('/api/v1/products')
+      const { data } = await axios.get(`/api/v1/products?page=${currentPage}`);
 
-        dispatch({
-            type: ALL_PRODUCTS_SUCCESS,
-            payload: data
-        })
-
+      dispatch({
+        type: ALL_PRODUCTS_SUCCESS,
+        payload: data,
+      });
     } catch (error) {
-        dispatch({
-            type: ALL_PRODUCTS_FAIL,
-            payload: error.response.data.message
-        })
+      dispatch({
+        type: ALL_PRODUCTS_FAIL,
+        payload: error.response.data.message,
+      });
     }
-}
+  };
 
 export const getProductDetails = (id) => async(dispatch) => {
     try {

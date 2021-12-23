@@ -1,52 +1,87 @@
-import React, { Fragment, useEffect} from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useAlert } from 'react-alert';
+import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../actions/productActions';
+import Loader from './layout/Loader';
 import MetaData from "./layout/MetaData";
 import Product from './product/Product';
-import Loader from './layout/Loader';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useAlert } from 'react-alert';
-import { getProducts } from '../actions/productActions'
 
 const Home = ({ match }) => {
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, products, error, productCount } = useSelector(state => state.products)
+  // const { loading, products, error, productCount } = useSelector(state => state.products)
+  const {
+    loading,
+    products,
+    error,
+    productsCount,
+    resPerPage
+    
+  } = useSelector((state) => state.products);
+
+  console.log('=======D=======');
+  console.log(productsCount);
+   console.log("======T========");
+  console.log(resPerPage);
+  console.log('=======P=======');
 
 
   useEffect(() => {
       if (error) {
         return alert.error(error)
       }
-      dispatch(getProducts());
+      dispatch(getProducts(currentPage));
 
       
+  }, [dispatch, alert, currentPage, error])
 
-
-  }, [dispatch, alert, error])
+  function setCurrentPageNo(pageNumber) {
+    setCurrentPage(pageNumber);
+  }
 
 
   return (
     <Fragment>
-      {loading ? <Loader />:  (
+      {loading ? (
+        <Loader />
+      ) : (
         <Fragment>
           <MetaData title={"Buy Best Products Online"} />
-      <h1 id="products_heading">Latest Products</h1>
+          <h1 id="products_heading">Latest Products</h1>
 
-      <section id="products" className="container mt-5">
-        <div className="row">
-          
-            {products && products.map(product => (
-              <Product key={product._id} product={product}/> 
-            ))}
-          
+          <section id="products" className="container mt-5">
+            <div className="row">
+              {products &&
+                products.map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
+            </div>
+          </section>
 
-        </div>
-      </section>
+          {/* {resPerPage <= productsCount && ( */}
+            <div className="d-flex justify-content-center mt-5">
+              <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={resPerPage}
+                totalItemsCount={productsCount}
+                onChange={setCurrentPageNo}
+                nextPageText={"Next"}
+                prevPageText={"Prev"}
+                firstPageText={"First"}
+                lastPageText={"Last"}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          {/* )} */}
         </Fragment>
       )}
-      
     </Fragment>
   );
 };
