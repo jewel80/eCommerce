@@ -20,6 +20,27 @@ exports.newProduct = catchAsynErrors(async(req, res, next) => {
 
 
 //Get All Product => /api/v1/admin/products
+// exports.getProducts = catchAsynErrors(async(req, res, next) => {
+
+//     const resPerPage = 8;
+//     const productsCount = await Product.countDocuments();
+
+//     const apiFeatures = new APIFeatures(Product.find(), req.query)
+//         .seacrh()
+//         .filter()
+//         .pagenation(resPerPage);
+
+//     const products = await apiFeatures.query;
+
+//     res.status(200).json({
+//       success: true,
+//       // count: products.length,
+//       productsCount,
+//       resPerPage,
+//       products,
+//     });
+// })
+
 exports.getProducts = catchAsynErrors(async(req, res, next) => {
 
     const resPerPage = 8;
@@ -30,13 +51,14 @@ exports.getProducts = catchAsynErrors(async(req, res, next) => {
         .filter()
         .pagenation(resPerPage);
 
-    const products = await apiFeatures.query;
+    let products = await apiFeatures.query;
+    let filteredProductsCount = products.length;
 
     res.status(200).json({
       success: true,
-      // count: products.length,
       productsCount,
       resPerPage,
+      filteredProductsCount,
       products,
     });
 })
