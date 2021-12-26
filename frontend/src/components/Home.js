@@ -56,7 +56,6 @@ const Home = ({ match }) => {
   }
 
 
-
   let count = productsCount;
     if (keyword) {
         count = filteredProductsCount
@@ -149,7 +148,6 @@ const Home = ({ match }) => {
                                                 </ul>
                                             </div>
                                            
-
                                         </div>
                                     </div>
 
@@ -169,11 +167,7 @@ const Home = ({ match }) => {
                                     ))
                                 )}
 
-              {/* {products &&
-                products.map((product) => (
-                  <Product key={product._id} product={product} />
-                ))} */}
-
+         
             </div>
           </section>
 

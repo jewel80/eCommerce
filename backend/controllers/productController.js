@@ -19,7 +19,7 @@ exports.newProduct = catchAsynErrors(async(req, res, next) => {
 })
 
 
-//Get All Product => /api/v1/admin/products
+//Get All Product => /api/v1/admin/products backup
 // exports.getProducts = catchAsynErrors(async(req, res, next) => {
 
 //     const resPerPage = 8;

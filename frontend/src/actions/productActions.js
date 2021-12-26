@@ -40,7 +40,7 @@ export const getProducts = (keyword='', currentPage, price, category, rating= 0)
   };
 
 
-//Product Details
+//Product Details.
 export const getProductDetails = (id) => async(dispatch) => {
     try {
 

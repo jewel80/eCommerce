@@ -76,3 +76,5 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
             return state
     }
 }
+
+//jr
