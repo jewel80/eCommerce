@@ -28,10 +28,10 @@ const Home = ({ match }) => {
       }
 
 
-      dispatch(getProducts(currentPage));
+      dispatch(getProducts(keyword, currentPage));
 
       
-  }, [dispatch, alert, keyword,  currentPage, error])
+  }, [dispatch, alert, error, keyword,  currentPage ])
 
 
 
