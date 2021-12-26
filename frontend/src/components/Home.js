@@ -15,35 +15,36 @@ const Home = ({ match }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  // const { loading, products, error, productCount } = useSelector(state => state.products)
-  const {
-    loading,
-    products,
-    error,
-    productsCount,
-    resPerPage
-    
-  } = useSelector((state) => state.products);
 
-  console.log('=======D=======');
-  console.log(productsCount);
-   console.log("======T========");
-  console.log(resPerPage);
-  console.log('=======P=======');
+  const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products)
 
+  
+
+  const keyword = match.params.keyword;
 
   useEffect(() => {
       if (error) {
         return alert.error(error)
       }
+
+
       dispatch(getProducts(currentPage));
 
       
-  }, [dispatch, alert, currentPage, error])
+  }, [dispatch, alert, keyword,  currentPage, error])
+
+
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
+
+
+
+  let count = productsCount;
+    if (keyword) {
+        count = filteredProductsCount
+    }
 
 
   return (
@@ -64,22 +65,24 @@ const Home = ({ match }) => {
             </div>
           </section>
 
-          {/* {resPerPage <= productsCount && ( */}
+          {/* Pagenation Code */}
+          {resPerPage <= productsCount && (
             <div className="d-flex justify-content-center mt-5">
-              <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={resPerPage}
-                totalItemsCount={productsCount}
-                onChange={setCurrentPageNo}
-                nextPageText={"Next"}
-                prevPageText={"Prev"}
-                firstPageText={"First"}
-                lastPageText={"Last"}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
+                <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={resPerPage}
+                    totalItemsCount={productsCount}
+                    onChange={setCurrentPageNo}
+                    nextPageText={'Next'}
+                    prevPageText={'Prev'}
+                    firstPageText={'First'}
+                    lastPageText={'Last'}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                />
             </div>
-          {/* )} */}
+        )} 
+
         </Fragment>
       )}
     </Fragment>
