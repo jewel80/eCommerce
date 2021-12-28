@@ -1,15 +1,11 @@
 import axios from 'axios';
-
 import {
-    LOGIN_REQUEST,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL,
-    REGISTER_USER_REQUEST,
-    REGISTER_USER_SUCCESS,
-    REGISTER_USER_FAIL,
 
-    CLEAR_ERRORS
+    CLEAR_ERRORS, LOGIN_FAIL, LOGIN_REQUEST,
+    LOGIN_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS
 } from '../constants/userConstants';
+
 
 
 // Login
@@ -42,7 +38,7 @@ export const login = (email, password) => async (dispatch) => {
 // Register user
 export const register = (userData) => async (dispatch) => {
     try {
-
+        console.log(userData);
         dispatch({ type: REGISTER_USER_REQUEST })
 
         const config = {
@@ -51,7 +47,8 @@ export const register = (userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/api/v1/register', userData, config)
+        const { data } = await axios.post("/api/v1/register", userData, config);
+        
 
         dispatch({
             type: REGISTER_USER_SUCCESS,

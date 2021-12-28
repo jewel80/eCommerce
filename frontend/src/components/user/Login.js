@@ -1,12 +1,12 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import { clearErrors, login } from '../../actions/userActions'
 import Loader from '../layout/Loader'
 import MetaData from '../layout/MetaData'
 
-import { useAlert } from 'react-alert'
-import { useDispatch, useSelector } from 'react-redux'
-import { login, clearErrors } from '../../actions/userActions'
+
 
 const Login = ({ history }) => {
 

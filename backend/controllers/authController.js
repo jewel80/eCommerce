@@ -6,13 +6,42 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require('crypto');
 const cloudinary = require('cloudinary');
 
+
+// Register a user   => /api/v1/register
+// exports.registerUser = catchAsynErrors(async (req, res, next) => {
+// console.log(req.body);
+//   const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+//     folder: "avatars",
+//     width: 150,
+//     crop: "scale",
+//   });
+
+//   const { name, email, password } = req.body;
+
+//   const user = await User.create({
+//     name,
+//     email,
+//     password,
+//     avatar: {
+//       public_id: result.public_id,
+//       url: result.secure_url,
+//     },
+//   });
+
+//   sendToken(user, 200, res);
+// });
+
 exports.registerUser = catchAsynErrors(async(req, res, next) => {
 
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'avatars',
-        width: 150,
-        crop: "scale"
-    })
+    console.log("=======S=========");
+    console.log(req.body);
+    console.log("========E========");
+
+    // const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //     folder: 'avatars',
+    //     width: 150,
+    //     crop: "scale"
+    // })
 
     const { name, email, password } = req.body;
 
@@ -33,7 +62,7 @@ exports.registerUser = catchAsynErrors(async(req, res, next) => {
         avatar: {
             public_id: "25646546735346",
             url: "https://scontent.fdac120-1.fna.fbcdn.net/v/t1.6435-9/82120930_2545604369096590_7241583266447228928_n.jpg?_nc_cat=109&cb=c578a115-c1c39920&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeG98GSwhmskjbBTy95Jxts3cIfZlg998rBwh9mWD33ysJRQZX19WN2LVWFuYQf3D7dAelsDS5GNmCzQzIcNKlaE&_nc_ohc=WuMoiV-IAZkAX_kM5aN&tn=hebTZJUaGXEOALw7&_nc_ht=scontent.fdac120-1.fna&oh=9863fcf05b1835131da9c8696c69bf98&oe=61D6FEB5",
-        },
+        }
     });
 
     sendToken(user, 200, res)
