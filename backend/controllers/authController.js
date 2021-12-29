@@ -91,24 +91,29 @@ exports.loginUser = catchAsynErrors(async(req, res, next) => {
 
 })
 
-// Forgot password => /api/v1/password/forgot
-exports.forgotPassword = catchAsynErrors(async(req, res, next) => {
 
-    const user = await User.findOne({ email: req.body.email })
+// Forgot Password   =>  /api/v1/password/forgot 
+exports.forgotPassword = catchAsynErrors(async (req, res, next) => {
+
+    const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-        return next(new ErrorHandler('User not foundd with this email', 404));
+        return next(new ErrorHandler('User not found with this email', 404));
     }
 
-    //get reset token
+    // Get reset token
     const resetToken = user.getResetPasswordToken();
 
-    await user.save({ validateBeforeSave: false })
+    await user.save({ validateBeforeSave: false });
 
-    //create reset password url
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
-    const message = `Your password reset token is a follow:\n\n${resetUrl}\n\nIf you have not request this email, then ignor it.`;
+    // Create reset password url
+    const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+    // const resetUrl = `${req.protocol}://${req.get('host')}/password/reset/${resetToken}`;
 
+    const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
+    
+    console.log(resetUrl);
+    
     try {
 
         await sendEmail({
@@ -126,19 +131,19 @@ exports.forgotPassword = catchAsynErrors(async(req, res, next) => {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
 
-        await user.save({ validateBeforeSave: false })
+        await user.save({ validateBeforeSave: false });
 
         return next(new ErrorHandler(error.message, 500))
     }
 
 })
 
+// https://stackoverflow.com/questions/60701936/error-invalid-login-application-specific-password-required
 
+// Reset Password   =>  /api/v1/password/reset/:token
+exports.resetPassword = catchAsynErrors(async (req, res, next) => {
 
-// Reset password => /api/v1/password/reset/:token
-exports.resetPassword = catchAsynErrors(async(req, res, next) => {
-
-    //Hash URL token
+    // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
 
     const user = await User.findOne({
@@ -146,26 +151,26 @@ exports.resetPassword = catchAsynErrors(async(req, res, next) => {
         resetPasswordExpire: { $gt: Date.now() }
     })
 
-    console.log(user)
-
     if (!user) {
-        return next(new ErrorHandler('Password reset token is invalid or has been expired', 400));
+        return next(new ErrorHandler('Password reset token is invalid or has been expired', 400))
     }
 
-    if (req.body.password !== req.body.confrimPassword) {
-        return next(new ErrorHandler('Password donse not match', 400));
+    if (req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorHandler('Password does not match', 400))
     }
 
-    //setup new password
+    // Setup new password
     user.password = req.body.password;
+
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
     await user.save();
+
     sendToken(user, 200, res)
 
-
 })
+
 
 
 //Get Currently Logged in user details => /api/v1/me
