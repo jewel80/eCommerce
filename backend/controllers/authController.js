@@ -33,9 +33,7 @@ const cloudinary = require('cloudinary');
 
 exports.registerUser = catchAsynErrors(async(req, res, next) => {
 
-    console.log("=======S=========");
-    console.log(req.body);
-    console.log("========E========");
+    
 
     // const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
     //     folder: 'avatars',
@@ -110,8 +108,6 @@ exports.forgotPassword = catchAsynErrors(async(req, res, next) => {
     //create reset password url
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
     const message = `Your password reset token is a follow:\n\n${resetUrl}\n\nIf you have not request this email, then ignor it.`;
-
-
 
     try {
 
@@ -212,7 +208,26 @@ exports.updateProfile = catchAsynErrors(async (req, res, next) => {
         email: req.body.email,
     }
 
-    //update avatat: TODO
+    // Update avatar
+    // if (req.body.avatar !== '') {
+    //     const user = await User.findById(req.user.id)
+
+    //     const image_id = user.avatar.public_id;
+    //     const res = await cloudinary.v2.uploader.destroy(image_id);
+
+    //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //         folder: 'avatars',
+    //         width: 150,
+    //         crop: "scale"
+    //     })
+
+    //     newUserData.avatar = {
+    //         public_id: result.public_id,
+    //         url: result.secure_url
+    //     }
+    // }
+
+    //update avatar: TODO
     const user = await User.findByIdAndUpdate(req.user.id, newuserData, {
         new: true,
         runValidators: true,
