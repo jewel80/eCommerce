@@ -11,7 +11,8 @@ const ConfirmOrder = ({ history }) => {
     const { cartItems, shippingInfo } = useSelector(state => state.cart)
     const { user } = useSelector(state => state.auth)
 
-    // Calculate Order Prices
+
+    // Calculate Order Prices 
     const itemsPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
     const shippingPrice = itemsPrice > 200 ? 0 : 25
     const taxPrice = Number((0.05 * itemsPrice).toFixed(2))
@@ -32,7 +33,7 @@ const ConfirmOrder = ({ history }) => {
     return (
         <Fragment>
 
-            <MetaData title={'Confirm Order'} />
+            <MetaData title={' Confirm Order '} />
 
             <CheckoutSteps shipping confirmOrder />
 
@@ -50,6 +51,7 @@ const ConfirmOrder = ({ history }) => {
                     {cartItems.map(item => (
                         <Fragment>
                             <hr />
+
                             <div className="cart-item my-1" key={item.product}>
                                 <div className="row">
                                     <div className="col-4 col-lg-2">
@@ -67,6 +69,7 @@ const ConfirmOrder = ({ history }) => {
 
                                 </div>
                             </div>
+
                             <hr />
                         </Fragment>
                     ))}
