@@ -8,6 +8,8 @@ const ErrorHandler = require("../utils/errorHandler");
 //create a new Order => /api/v1/order/new
 exports.newOrder = catchAsynErrors(async(req, res, next) => {
 
+    console.log( req.body);
+
     const {
         orderItems,
         shippingInfo,
