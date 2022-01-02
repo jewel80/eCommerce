@@ -9,6 +9,7 @@ import Payment from './components/cart/Payment'
 import OrderSuccess from './components/cart/OrderSuccess'
 
 import ListOrder from './components/order/ListOrders'
+import OrderDetails from "./components/order/OrderDetails";
 
 import Home from "./components/Home";
 import Footer from "./components/layout/Footer";
@@ -81,6 +82,7 @@ function App() {
           <Route path="/password/reset/:token" component={NewPassword} exact />
 
           <Route path="/orders/me" component={ListOrder} exact />
+          <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
 
           <ProtectedRoute path="/me" component={Profile} exact />
           <ProtectedRoute path="/me/update" component={UpdateProfile} exact />
