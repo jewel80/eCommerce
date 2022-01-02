@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = mongoose.Schema({
   shippingInfo: {
     address: {
       type: String,
@@ -50,21 +50,22 @@ const orderSchema = new mongoose.Schema({
       product: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "product",
+        ref: "Product",
       },
     },
   ],
   paymentInfo: {
     id: {
-      type: String
+      type: String,
     },
     status: {
-      tpye: String
+      type: String,
     },
   },
   paidAt: {
     type: Date,
   },
+
   itemsPrice: {
     type: Number,
     required: true,
@@ -96,7 +97,8 @@ const orderSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);
+
