@@ -8,7 +8,7 @@ const ErrorHandler = require("../utils/errorHandler");
 //create a new Order => /api/v1/order/new
 exports.newOrder = catchAsynErrors(async(req, res, next) => {
 
-    console.log( req.body);
+    // console.log( req.body);
 
     const {
         orderItems,
@@ -53,15 +53,25 @@ exports.getSingleOrder = catchAsynErrors(async(req, res, next) => {
 
 
 //Get logged in user orders => /api/v1/orders/me
-exports.myOrders = catchAsynErrors(async(req, res, next) => {
+// exports.myOrders = catchAsynErrors(async(req, res, next) => {
+//   const order = await Order.find({ user: req.user.id });
 
-    const order = await Order.find({ user: req.user.id });
+//   res.status(200).json({
+//     success: true,
+//     orders,
+//   });
 
-    res.status(200).json({
-        success: true,
-        order
-    })
-})
+//   console.log( req.user.id);
+// })
+
+exports.myOrders = catchAsynErrors(async (req, res, next) => {
+  const orders = await Order.find({ user: req.user.id });
+
+  res.status(200).json({
+    success: true,
+    orders,
+  });
+});
 
 
 //Get all orders -ADMIN => /api/v1/admin/orders

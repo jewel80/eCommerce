@@ -108,8 +108,7 @@ const Payment = ({ history }) => {
                         status: result.paymentIntent.status
                     }
 
-                    console.log("order"+ order);
-                    console.log("order.paymentInfo"+ order.paymentInfo);
+                    
 
                     dispatch(createOrder(order))
 

@@ -7,8 +7,8 @@ import { productsReducer, productDetailsReducer } from './reducers/productReduce
 import { authReducer, userReducer, forgotPasswordReducer } from './reducers/userReducers';
 import { cartReducer } from "./reducers/cartReducers";
 import { 
-  newOrderReducer 
-  // myOrdersReducer, 
+  newOrderReducer,
+  myOrdersReducer
   // orderDetailsReducer, 
   // allOrdersReducer, 
   // orderReducer 
@@ -22,7 +22,8 @@ const reducer = combineReducers({
   user: userReducer,
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
-  newOrder: newOrderReducer
+  newOrder: newOrderReducer,
+  myOrders: myOrdersReducer
 });
 
 

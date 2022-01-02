@@ -8,6 +8,8 @@ import ConfirmOrder from './components/cart/ConfirmOrder'
 import Payment from './components/cart/Payment'
 import OrderSuccess from './components/cart/OrderSuccess'
 
+import ListOrder from './components/order/ListOrders'
+
 import Home from "./components/Home";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
@@ -67,16 +69,18 @@ function App() {
           <ProtectedRoute path="/shipping" component={Shipping} />
           <ProtectedRoute path="/order/confirm" component={ConfirmOrder} />
           <ProtectedRoute path="/success" component={OrderSuccess} />
-          {stripeApiKey &&
+          {stripeApiKey && (
             <Elements stripe={loadStripe(stripeApiKey)}>
               <ProtectedRoute path="/payment" component={Payment} />
             </Elements>
-          }
+          )}
 
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/password/forgot" component={ForgotPassword} exact />
           <Route path="/password/reset/:token" component={NewPassword} exact />
+
+          <Route path="/orders/me" component={ListOrder} exact />
 
           <ProtectedRoute path="/me" component={Profile} exact />
           <ProtectedRoute path="/me/update" component={UpdateProfile} exact />
