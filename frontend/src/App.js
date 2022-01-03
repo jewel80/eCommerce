@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { loadUser } from './actions/userActions';
 
+//Cart Imports 
 import Cart from "./components/cart/Cart";
 import Shipping from './components/cart/Shipping'
 import ConfirmOrder from './components/cart/ConfirmOrder'
 import Payment from './components/cart/Payment'
 import OrderSuccess from './components/cart/OrderSuccess'
 
+//Order Imports
 import ListOrder from './components/order/ListOrders'
 import OrderDetails from "./components/order/OrderDetails";
 
@@ -16,13 +18,20 @@ import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import ProductDetails from './components/product/ProductDetails';
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import ForgotPassword from "./components/user/ForgotPassword";
+
+
+//Auth or User Imports
 import Login from './components/user/Login';
 import NewPassword from "./components/user/NewPassword";
+import ForgotPassword from "./components/user/ForgotPassword";
 import Profile from './components/user/Profile';
 import Register from './components/user/Register';
 import UpdatePassword from "./components/user/UpdatePassword";
 import UpdateProfile from "./components/user/UpdateProfile";
+
+//Admin imports
+import Dashboard from './components/admin/Dashboard';
+
 import store from './store';
 import axios from 'axios';
 
@@ -80,18 +89,15 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/password/forgot" component={ForgotPassword} exact />
           <Route path="/password/reset/:token" component={NewPassword} exact />
+          <ProtectedRoute path="/me" component={Profile} exact />
+          <ProtectedRoute path="/me/update" component={UpdateProfile} exact />
+          <ProtectedRoute path="/password/update" component={UpdatePassword} exact/>
 
           <Route path="/orders/me" component={ListOrder} exact />
           <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
 
-          <ProtectedRoute path="/me" component={Profile} exact />
-          <ProtectedRoute path="/me/update" component={UpdateProfile} exact />
-          <ProtectedRoute
-            path="/password/update"
-            component={UpdatePassword}
-            exact
-          />
         </div>
+          <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
         <Footer />
       </div>
     </Router>
