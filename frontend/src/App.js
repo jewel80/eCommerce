@@ -31,6 +31,7 @@ import UpdateProfile from "./components/user/UpdateProfile";
 
 //Admin imports
 import Dashboard from './components/admin/Dashboard';
+import ProductList from './components/admin/ProductList';
 
 import store from './store';
 import axios from 'axios';
@@ -39,6 +40,7 @@ import axios from 'axios';
 // Payment
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+
 
 
 
@@ -97,7 +99,10 @@ function App() {
           <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
 
         </div>
+
           <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
+          <ProtectedRoute path="/admin/products" isAdmin={true} component={ProductList} exact />
+
         <Footer />
       </div>
     </Router>

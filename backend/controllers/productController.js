@@ -18,6 +18,17 @@ exports.newProduct = catchAsynErrors(async(req, res, next) => {
     })
 })
 
+//Get all Admin Product => /api/v1/admin/products
+exports.getAdminProducts = catchAsynErrors(async(req, res, next) => {
+
+    const products = await Product.find();
+
+    res.status(200).json({
+      success: true,
+      products
+    });
+})
+
 
 //Get All Product => /api/v1/admin/products backup
 // exports.getProducts = catchAsynErrors(async(req, res, next) => {
@@ -153,42 +164,7 @@ exports.createProductReview = catchAsynErrors(async (req, res, next) => {
     })
 
 })
-// exports.createProductReview = catchAsynErrors(async(req, res, next) => {
-//     const { rating, comment, productId } = req.body;
 
-//     const review = {
-//         user: req.user._id,
-//         name: req.user.name,
-//         rating: Number(rating),
-//         comment
-//     }
-
-//     const product = await Product.findById(productId);
-
-//     const isReviewed = product.reviews.find(
-//         r => r.user.toString() === req.user._id.toString()
-//     )
-
-//     if (isReviewed) {
-//         product.reviews.forEach(review => {
-//             if (review.user.toString() === req.user._id.toString()) {
-//                 review.comment = comment;
-//                 review.rating = rating;
-//             }
-//         })
-//     } else {
-//         product.reviews.push(review);
-//         product.numberOfReviews = product.reviews.length
-//     }
-
-//     product.ratings = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
-
-//     await product.save({ validateBeforeSave: false });
-
-//     res.status(200).json({
-//         success: true
-//     })
-// })
 
 
 //Get Product Reviews => /api/v1/reviews
