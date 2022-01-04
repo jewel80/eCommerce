@@ -32,7 +32,7 @@ exports.newProduct = catchAsynErrors(async (req, res, next) => {
         })
     }
 
-    req.body.images = imagesLinks
+    //req.body.images = imagesLinks
     req.body.user = req.user.id;
 
     const product = await Product.create(req.body);
@@ -153,6 +153,11 @@ exports.deleteProduct = catchAsynErrors(async(req, res, next) => {
     if (!product) {
         return next(new ErrorHandler('Product not found', 404))
     }
+
+    // // Deleting images associated with the product
+    // for (let i = 0; i < product.images.length; i++) {
+    //     const result = await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+    // }
 
     await product.remove()
 
