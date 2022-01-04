@@ -6,56 +6,56 @@ const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 
 // Create new product   =>   /api/v1/admin/product/new
-exports.newProduct = catchAsynErrors(async (req, res, next) => {
+// exports.newProduct = catchAsynErrors(async (req, res, next) => {
 
-    // console.log('===========S============');
-    // console.log(req.body);
-    // console.log('============E===========');
+//     // console.log('===========S============');
+//     // console.log(req.body);
+//     // console.log('============E===========');
 
-    let images = []
-    if (typeof req.body.images === 'string') {
-        images.push(req.body.images)
-    } else {
-        images = req.body.images
-    }
+//     let images = []
+//     if (typeof req.body.images === 'string') {
+//         images.push(req.body.images)
+//     } else {
+//         images = req.body.images
+//     }
 
-    let imagesLinks = [];
+//     let imagesLinks = [];
 
-    for (let i = 0; i < images.length; i++) {
-        const result = await cloudinary.v2.uploader.upload(images[i], {
-            folder: 'products'
-        });
+//     for (let i = 0; i < images.length; i++) {
+//         const result = await cloudinary.v2.uploader.upload(images[i], {
+//             folder: 'products'
+//         });
 
-        imagesLinks.push({
-            public_id: result.public_id,
-            url: result.secure_url
-        })
-    }
+//         imagesLinks.push({
+//             public_id: result.public_id,
+//             url: result.secure_url
+//         })
+//     }
 
-    req.body.images = imagesLinks
-    req.body.user = req.user.id;
-
-    const product = await Product.create(req.body);
-
-    res.status(201).json({
-        success: true,
-        product
-    })
-})
-
-
-//create new product => /api/v1/product/new
-// exports.newProduct = catchAsynErrors(async(req, res, next) => {
-
+//     req.body.images = imagesLinks
 //     req.body.user = req.user.id;
 
-//     const apiFeatures = new APIFeatures(Product.find(), )
-//     const product = await Product.create(req.body)
+//     const product = await Product.create(req.body);
+
 //     res.status(201).json({
 //         success: true,
 //         product
 //     })
 // })
+
+
+// create new product => /api/v1/product/new
+exports.newProduct = catchAsynErrors(async(req, res, next) => {
+
+    req.body.user = req.user.id;
+
+    const apiFeatures = new APIFeatures(Product.find(), )
+    const product = await Product.create(req.body)
+    res.status(201).json({
+        // success: true,
+        product
+    })
+})
 
 //Get all Admin Product => /api/v1/admin/products
 exports.getAdminProducts = catchAsynErrors(async(req, res, next) => {

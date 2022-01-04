@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-
-import MetaData from '../layout/MetaData'
-import Loader from '../layout/Loader'
-
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrderDetails, clearErrors } from '../../actions/orderActions'
+import { Link } from 'react-router-dom'
+import { clearErrors, getOrderDetails } from '../../actions/orderActions'
+import Loader from '../layout/Loader'
+import MetaData from '../layout/MetaData'
+
+
 
 const OrderDetails = ({ match }) => {
 

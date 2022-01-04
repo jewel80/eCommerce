@@ -181,7 +181,7 @@ exports.updatePassword = catchAsynErrors(async(req, res, next) => {
 
 })
 
-//Update user profile => /api/v1/me/update
+//Update user profile => /api/v1/me/update..
 exports.updateProfile = catchAsynErrors(async (req, res, next) => {
 
     const newuserData = {
