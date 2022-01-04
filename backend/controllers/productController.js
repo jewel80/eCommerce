@@ -57,7 +57,7 @@ exports.newProduct = catchAsynErrors(async(req, res, next) => {
     })
 })
 
-//Get all Admin Product => /api/v1/admin/products
+//Get all Admin Product => /api/v1/admin/products..
 exports.getAdminProducts = catchAsynErrors(async(req, res, next) => {
 
     const products = await Product.find();
