@@ -88,7 +88,7 @@ exports.forgotPassword = catchAsynErrors(async (req, res, next) => {
 
     const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
     
-    console.log(resetUrl);
+    // console.log(resetUrl);
     
     try {
 
@@ -151,8 +151,7 @@ exports.resetPassword = catchAsynErrors(async (req, res, next) => {
 
 //Get Currently Logged in user details => /api/v1/me
 exports.getUserProfile = catchAsynErrors(async(req, res, next) => {
-    console.log(req);
-    console.log(req.user.id);
+    
     const user = await User.findById(req.user.id);
 
    res.status(200).json({

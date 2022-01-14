@@ -65,7 +65,6 @@ export const login = (email, password) => async (dispatch) => {
 // Register user
 export const register = (userData) => async (dispatch) => {
     try {
-        console.log(userData);
         dispatch({ type: REGISTER_USER_REQUEST })
 
         const config = {

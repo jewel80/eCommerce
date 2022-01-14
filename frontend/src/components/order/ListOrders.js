@@ -57,10 +57,6 @@ const ListOrders = () => {
       rows: [],
     };
 
-    console.log("=========S========");
-    console.log(orders);
-    console.log("=========E========");
-
     orders.forEach((order) => {
       data.rows.push({
         id: order._id,

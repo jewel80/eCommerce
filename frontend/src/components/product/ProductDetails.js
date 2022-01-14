@@ -117,7 +117,7 @@ const ProductDetails = ({ match }) => {
         dispatch(newReview(formData));
     }
 
-    console.log("key " + product.ratings);
+    
 
     return (
         <Fragment>

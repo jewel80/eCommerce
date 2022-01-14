@@ -59,7 +59,7 @@ export const myOrders = () => async (dispatch) => {
         payload: data.orders,
       });
     } catch (error) {
-        console.log(error.response.data.message);
+        // console.log(error.response.data.message);
         dispatch({
             type: MY_ORDERS_FAIL,
             payload: error.response.data.message
