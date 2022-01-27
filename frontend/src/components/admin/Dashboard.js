@@ -16,9 +16,12 @@ const Dashboard = () => {
     const dispatch = useDispatch();
 
     const { products } = useSelector(state => state.products)
+    const { orders, totalAmount, loading } = useSelector(state => state.allOrders)
+
 
     useEffect(()  => {
         dispatch(getAdminProducts())
+        dispatch(allOrders())
     }, [dispatch])
 
     let outOfStock = 0;
@@ -48,8 +51,7 @@ const Dashboard = () => {
                                 <div className="col-xl-12 col-sm-12 mb-3">
                                     <div className="card text-white bg-primary o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Total Amount<br /> <b>$520</b>
-                                            {/* <div className="text-center card-font-size">Total Amount<br /> <b>${totalAmount && totalAmount.toFixed(2)}</b> */}
+                                            <div className="text-center card-font-size">Total Amount<br /> <b>${totalAmount && totalAmount.toFixed(2)}</b>
                                             </div>
                                         </div>
                                     </div>
@@ -76,8 +78,7 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-danger o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Orders<br /> <b>592</b></div>
-                                            {/* <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div> */}
+                                            <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div>
                                         </div>
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
                                             <span className="float-left">View Details</span>

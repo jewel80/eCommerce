@@ -5,9 +5,9 @@ import {
   MY_ORDERS_REQUEST,
   MY_ORDERS_SUCCESS,
   MY_ORDERS_FAIL,
-//   ALL_ORDERS_REQUEST,
-//   ALL_ORDERS_SUCCESS,
-//   ALL_ORDERS_FAIL,
+  ALL_ORDERS_REQUEST,
+  ALL_ORDERS_SUCCESS,
+  ALL_ORDERS_FAIL,
 //   UPDATE_ORDER_REQUEST,
 //   UPDATE_ORDER_SUCCESS,
 //   UPDATE_ORDER_RESET,
@@ -114,36 +114,36 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
     }
 }
 
-// export const allOrdersReducer = (state = { orders: [] }, action) => {
-//     switch (action.type) {
+export const allOrdersReducer = (state = { orders: [] }, action) => {
+    switch (action.type) {
 
-//         case ALL_ORDERS_REQUEST:
-//             return {
-//                 loading: true
-//             }
+        case ALL_ORDERS_REQUEST:
+            return {
+                loading: true
+            }
 
-//         case ALL_ORDERS_SUCCESS:
-//             return {
-//                 loading: false,
-//                 orders: action.payload.orders,
-//                 totalAmount: action.payload.totalAmount
-//             }
+        case ALL_ORDERS_SUCCESS:
+            return {
+                loading: false,
+                orders: action.payload.orders,
+                totalAmount: action.payload.totalAmount
+            }
 
-//         case ALL_ORDERS_FAIL:
-//             return {
-//                 loading: false,
-//                 error: action.payload
-//             }
-//         case CLEAR_ERRORS:
-//             return {
-//                 ...state,
-//                 error: null
-//             }
+        case ALL_ORDERS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
 
-//         default:
-//             return state;
-//     }
-// }
+        default:
+            return state;
+    }
+}
 
 // export const orderReducer = (state = {}, action) => {
 //     switch (action.type) {
