@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const catchAsynErrors = require("../middlewares/catchAsynErrors");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const cloudinary = require('cloudinary');
 
 
-exports.registerUser = catchAsynErrors(async(req, res, next) => {
+exports.registerUser = catchAsyncErrors(async(req, res, next) => {
 
     
 
@@ -43,7 +43,7 @@ exports.registerUser = catchAsynErrors(async(req, res, next) => {
 })
 
 //Login User => /api/v1/login
-exports.loginUser = catchAsynErrors(async(req, res, next) => {
+exports.loginUser = catchAsyncErrors(async(req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -69,7 +69,7 @@ exports.loginUser = catchAsynErrors(async(req, res, next) => {
 
 
 // Forgot Password   =>  /api/v1/password/forgot 
-exports.forgotPassword = catchAsynErrors(async (req, res, next) => {
+exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
     const user = await User.findOne({ email: req.body.email });
 
@@ -117,7 +117,7 @@ exports.forgotPassword = catchAsynErrors(async (req, res, next) => {
 // https://stackoverflow.com/questions/60701936/error-invalid-login-application-specific-password-required
 
 // Reset Password   =>  /api/v1/password/reset/:token
-exports.resetPassword = catchAsynErrors(async (req, res, next) => {
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
     // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
@@ -150,7 +150,7 @@ exports.resetPassword = catchAsynErrors(async (req, res, next) => {
 
 
 //Get Currently Logged in user details => /api/v1/me
-exports.getUserProfile = catchAsynErrors(async(req, res, next) => {
+exports.getUserProfile = catchAsyncErrors(async(req, res, next) => {
     
     const user = await User.findById(req.user.id);
 
@@ -162,7 +162,7 @@ exports.getUserProfile = catchAsynErrors(async(req, res, next) => {
 })
 
 //update /chnage password => /api/v1/me
-exports.updatePassword = catchAsynErrors(async(req, res, next) => {
+exports.updatePassword = catchAsyncErrors(async(req, res, next) => {
 
     const user = await User.findById(req.user.id).select('+password');
 
@@ -181,7 +181,7 @@ exports.updatePassword = catchAsynErrors(async(req, res, next) => {
 })
 
 //Update user profile => /api/v1/me/update..
-exports.updateProfile = catchAsynErrors(async (req, res, next) => {
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
     const newuserData = {
         name: req.body.name,
@@ -220,7 +220,7 @@ exports.updateProfile = catchAsynErrors(async (req, res, next) => {
 });
 
 //Logout User => /api/v1/logout]
-exports.logout = catchAsynErrors(async(req, res, next) => {
+exports.logout = catchAsyncErrors(async(req, res, next) => {
 
     res.cookie('token', null, {
         expires: new Date(Date.now()),
@@ -238,7 +238,7 @@ exports.logout = catchAsynErrors(async(req, res, next) => {
 //Admin Routes
 
 //Get all Users  => /api/v1/admin/users
-exports.allUsers = catchAsynErrors(async(req, res, next) => {
+exports.allUsers = catchAsyncErrors(async(req, res, next) => {
 
     const users = await User.find();
 
@@ -250,7 +250,7 @@ exports.allUsers = catchAsynErrors(async(req, res, next) => {
 })
 
 //Get User Details => /api/v1/admin/user/:id
-exports.getUserDeatils = catchAsynErrors(async(req, res, next) => {
+exports.getUserDeatils = catchAsyncErrors(async(req, res, next) => {
 
     const user = await User.findById(req.params.id);
 
@@ -272,7 +272,7 @@ exports.getUserDeatils = catchAsynErrors(async(req, res, next) => {
 
 
 //Update user profile => /api/v1/admin/user/:id
-exports.updateUser = catchAsynErrors(async (req, res, next) => {
+exports.updateUser = catchAsyncErrors(async (req, res, next) => {
 
     const newuserData = {
         name: req.body.name,
@@ -294,7 +294,7 @@ exports.updateUser = catchAsynErrors(async (req, res, next) => {
 
 
 //Get User Details => /api/v1/admin/user/:id
-exports.DeleteUser = catchAsynErrors(async(req, res, next) => {
+exports.DeleteUser = catchAsyncErrors(async(req, res, next) => {
 
     const user = await User.findById(req.params.id);
 
