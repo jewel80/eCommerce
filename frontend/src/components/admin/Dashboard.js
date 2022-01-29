@@ -5,11 +5,12 @@ import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import Sidebar from './Sidebar'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 
-import { getAdminProducts } from '../../actions/productActions'
-import { allOrders } from '../../actions/orderActions'
-import { allUsers } from '../../actions/userActions'
+import { getAdminProducts } from '../../actions/productActions';
+import { allUsers } from '../../actions/userActions';
+import { allOrders } from '../../actions/orderActions';
+
 
 const Dashboard = () => {
 
@@ -17,10 +18,11 @@ const Dashboard = () => {
 
     const { products } = useSelector(state => state.products)
     const { orders, totalAmount, loading } = useSelector(state => state.allOrders)
-
+    const { users } = useSelector(state => state.allUsers)
 
     useEffect(()  => {
         dispatch(getAdminProducts())
+        dispatch(allUsers())
         dispatch(allOrders())
     }, [dispatch])
 
@@ -93,8 +95,8 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-info o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Users<br /> <b>10</b></div>
-                                            {/* <div className="text-center card-font-size">Users<br /> <b>{users && users.length}</b></div> */}
+                                            {/* <div className="text-center card-font-size">Users<br /> <b>10</b></div> */}
+                                            <div className="text-center card-font-size">Users<br /> <b>{users && users.length}</b></div>
                                         </div>
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
                                             <span className="float-left">View Details</span>
