@@ -3,44 +3,62 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
+
 const crypto = require('crypto');
 const cloudinary = require('cloudinary');
 
+// Register a user   => /api/v1/register
+exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
-exports.registerUser = catchAsyncErrors(async(req, res, next) => {
-
-    
-
-    // const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //     folder: 'avatars',
-    //     width: 150,
-    //     crop: "scale"
-    // })
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: "scale"
+    })
 
     const { name, email, password } = req.body;
-
-    // const user = await User.create({
-    //     name,
-    //     email,
-    //     password,
-    //     avatar: {
-    //         public_id: result.public_id,
-    //         url: result.secure_url
-    //     }
-    // })
 
     const user = await User.create({
         name,
         email,
         password,
         avatar: {
-            public_id: "25646546735346",
-            url: "https://scontent.fdac120-1.fna.fbcdn.net/v/t1.6435-9/82120930_2545604369096590_7241583266447228928_n.jpg?_nc_cat=109&cb=c578a115-c1c39920&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeG98GSwhmskjbBTy95Jxts3cIfZlg998rBwh9mWD33ysJRQZX19WN2LVWFuYQf3D7dAelsDS5GNmCzQzIcNKlaE&_nc_ohc=WuMoiV-IAZkAX_kM5aN&tn=hebTZJUaGXEOALw7&_nc_ht=scontent.fdac120-1.fna&oh=9863fcf05b1835131da9c8696c69bf98&oe=61D6FEB5",
+            public_id: result.public_id,
+            url: result.secure_url
         }
-    });
+    })
 
     sendToken(user, 200, res)
+
 })
+
+// exports.registerUser = catchAsyncErrors(async(req, res, next) => {
+
+//     const { name, email, password } = req.body;
+
+//     // const user = await User.create({
+//     //     name,
+//     //     email,
+//     //     password,
+//     //     avatar: {
+//     //         public_id: result.public_id,
+//     //         url: result.secure_url
+//     //     }
+//     // })
+
+//     const user = await User.create({
+//         name,
+//         email,
+//         password,
+//         avatar: {
+//             public_id: "25646546735346",
+//             url: "https://scontent.fdac120-1.fna.fbcdn.net/v/t1.6435-9/82120930_2545604369096590_7241583266447228928_n.jpg?_nc_cat=109&cb=c578a115-c1c39920&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeG98GSwhmskjbBTy95Jxts3cIfZlg998rBwh9mWD33ysJRQZX19WN2LVWFuYQf3D7dAelsDS5GNmCzQzIcNKlaE&_nc_ohc=WuMoiV-IAZkAX_kM5aN&tn=hebTZJUaGXEOALw7&_nc_ht=scontent.fdac120-1.fna&oh=9863fcf05b1835131da9c8696c69bf98&oe=61D6FEB5",
+//         }
+//     });
+
+//     sendToken(user, 200, res)
+// })
+
 
 //Login User => /api/v1/login
 exports.loginUser = catchAsyncErrors(async(req, res, next) => {
@@ -180,45 +198,42 @@ exports.updatePassword = catchAsyncErrors(async(req, res, next) => {
 
 })
 
-//Update user profile => /api/v1/me/update..
+// Update user profile   =>   /api/v1/me/update
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-
-    const newuserData = {
+    const newUserData = {
         name: req.body.name,
-        email: req.body.email,
+        email: req.body.email
     }
 
     // Update avatar
-    // if (req.body.avatar !== '') {
-    //     const user = await User.findById(req.user.id)
+    if (req.body.avatar !== '') {
+        const user = await User.findById(req.user.id)
 
-    //     const image_id = user.avatar.public_id;
-    //     const res = await cloudinary.v2.uploader.destroy(image_id);
+        const image_id = user.avatar.public_id;
+        const res = await cloudinary.v2.uploader.destroy(image_id);
 
-    //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //         folder: 'avatars',
-    //         width: 150,
-    //         crop: "scale"
-    //     })
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: "scale"
+        })
 
-    //     newUserData.avatar = {
-    //         public_id: result.public_id,
-    //         url: result.secure_url
-    //     }
-    // }
+        newUserData.avatar = {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    }
 
-    //update avatar: TODO
-    const user = await User.findByIdAndUpdate(req.user.id, newuserData, {
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false
-    });
+    })
 
     res.status(200).json({
-      success: true
-    });
-});
-
+        success: true
+    })
+})
 //Logout User => /api/v1/logout]
 exports.logout = catchAsyncErrors(async(req, res, next) => {
 
