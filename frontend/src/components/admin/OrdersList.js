@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { MDBDataTable } from 'mdbreact'
+import moment from 'moment';
+
 
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -8,9 +10,8 @@ import Sidebar from './Sidebar'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { allOrders,  clearErrors } from '../../actions/orderActions'
-// import { allOrders, deleteOrder, clearErrors } from '../../actions/orderActions'
-// import { DELETE_ORDER_RESET } from '../../constants/orderConstants'
+import { allOrders, deleteOrder, clearErrors } from '../../actions/orderActions'
+import { DELETE_ORDER_RESET } from '../../constants/orderConstants'
 
 const OrdersList = ({ history }) => {
 
@@ -18,7 +19,7 @@ const OrdersList = ({ history }) => {
     const dispatch = useDispatch();
 
     const { loading, error, orders } = useSelector(state => state.allOrders);
-    // const { isDeleted } = useSelector(state => state.order)
+    const { isDeleted } = useSelector(state => state.order)
 
     useEffect(() => {
         dispatch(allOrders());
@@ -28,18 +29,18 @@ const OrdersList = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        // if (isDeleted) {
-        //     alert.success('Order deleted successfully');
-        //     history.push('/admin/orders');
-        //     dispatch({ type: DELETE_ORDER_RESET })
-        // }
+        if (isDeleted) {
+            alert.success('Order deleted successfully');
+            history.push('/admin/orders');
+            dispatch({ type: DELETE_ORDER_RESET })
+        }
 
-    }, [dispatch, alert, error,  history])
-    // }, [dispatch, alert, error, isDeleted, history])
+    // }, [dispatch, alert, error,  history])
+    }, [dispatch, alert, error, isDeleted, history])
 
-    // const deleteOrderHandler = (id) => {
-    //     dispatch(deleteOrder(id))
-    // }
+    const deleteOrderHandler = (id) => {
+        dispatch(deleteOrder(id))
+    }
 
     const setOrders = () => {
         const data = {
@@ -47,6 +48,11 @@ const OrdersList = ({ history }) => {
                 {
                     label: 'Order ID',
                     field: 'id',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Order Created Date',
+                    field: 'createdAt',
                     sort: 'asc'
                 },
                 {
@@ -75,6 +81,7 @@ const OrdersList = ({ history }) => {
         orders.forEach(order => {
             data.rows.push({
                 id: order._id,
+                createdAt: moment(order.createdAt).format("YYYY-DD-MM HH:MM:SS"),
                 numofItems: order.orderItems.length,
                 amount: `$${order.totalPrice}`,
                 status: order.orderStatus && String(order.orderStatus).includes('Delivered')
@@ -84,12 +91,9 @@ const OrdersList = ({ history }) => {
                     <Link to={`/admin/order/${order._id}`} className="btn btn-primary py-1 px-2">
                         <i className="fa fa-eye"></i>
                     </Link>
-                    <button className="btn btn-danger py-1 px-2 ml-2" >
+                    <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(order._id)}>
                         <i className="fa fa-trash"></i>
                     </button>
-                    {/* <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(order._id)}>
-                        <i className="fa fa-trash"></i>
-                    </button> */}
                 </Fragment>
             })
         })
