@@ -97,6 +97,18 @@ exports.getSingleProduct = catchAsyncErrors(async(req, res, next) => {
     })
 })
 
+//Get Single Product => /api/v1/product/:id
+exports.getSingleProductDetails = catchAsyncErrors(async(req, res, next) => {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+        return next(new ErrorHandler('Product not found', 404))
+    }
+    res.status(200).json({
+        success: true,
+        product
+    })
+})
+
 
 // Update Product   =>   /api/v1/admin/product/:id
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
@@ -137,8 +149,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         req.body.images = imagesLinks
 
     }
-
-
 
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
