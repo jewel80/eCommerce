@@ -79,13 +79,13 @@ const ProductsList = ({ history }) => {
                 stock: product.stock,
                 actions: <Fragment>
                     <Link to={`/admin/product/details/${product._id}`} className="btn btn-success py-1 px-2">
-                        <i className="fa fa-eye"></i>
+                        <i className="fa fa-eye" data-toggle="tooltip" title="View Details"></i>
                     </Link> &ensp; 
                     <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
+                        <i className="fa fa-pencil" data-toggle="tooltip" title="Edit"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteProductHandler(product._id)}>
-                        <i className="fa fa-trash"></i>
+                        <i className="fa fa-trash" data-toggle="tooltip" title="Detete"></i>
                     </button>
                 </Fragment>
             })
