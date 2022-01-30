@@ -5,9 +5,8 @@ import Sidebar from './Sidebar'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import {  getUserDetails, clearErrors } from '../../actions/userActions'
-// import { updateUser, getUserDetails, clearErrors } from '../../actions/userActions'
-// import { UPDATE_USER_RESET } from '../../constants/userConstants'
+import { updateUser, getUserDetails, clearErrors } from '../../actions/userActions'
+import { UPDATE_USER_RESET } from '../../constants/userConstants'
 
 const UpdateUser = ({ history, match }) => {
 
@@ -18,8 +17,7 @@ const UpdateUser = ({ history, match }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { error } = useSelector(state => state.user);
-    // const { error, isUpdated } = useSelector(state => state.user);
+    const { error, isUpdated } = useSelector(state => state.user);
     const { user } = useSelector(state => state.userDetails)
 
     const userId = match.params.id;
@@ -40,18 +38,18 @@ const UpdateUser = ({ history, match }) => {
             dispatch(clearErrors());
         }
 
-        // if (isUpdated) {
-        //     alert.success('User updated successfully')
+        if (isUpdated) {
+            alert.success('User updated successfully')
 
-        //     history.push('/admin/users')
+            history.push('/admin/users')
 
-        //     dispatch({
-        //         type: UPDATE_USER_RESET
-        //     })
-        // }
+            dispatch({
+                type: UPDATE_USER_RESET
+            })
+        }
 
-    }, [dispatch, alert, error, history, userId, user])
-    // }, [dispatch, alert, error, history, isUpdated, userId, user])
+    // }, [dispatch, alert, error, history, userId, user])
+    }, [dispatch, alert, error, history, isUpdated, userId, user])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -61,7 +59,7 @@ const UpdateUser = ({ history, match }) => {
         formData.set('email', email);
         formData.set('role', role);
 
-        // dispatch(updateUser(user._id, formData))
+        dispatch(updateUser(user._id, formData))
     }
 
 
