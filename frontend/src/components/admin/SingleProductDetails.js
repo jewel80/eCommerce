@@ -33,7 +33,7 @@ const SingleProductDetails = ({ match }) => {
                 <div className="col-12 col-md-10">
                     <Fragment><br></br>
                     <Link to={`/admin/products`} className="btn btn-info py-1 px-2">
-                        <i class="fa fa-arrow-left" aria-hidden="true"> All Product</i>
+                        <i class="fa fa-arrow-left" aria-hidden="true"> Back</i>
 
                     </Link>
                         <h1 className="my-5 text-center" style={{ color: 'green' }}>Product Details</h1>
