@@ -41,8 +41,6 @@ const ProductReviews = () => {
             dispatch({ type: DELETE_REVIEW_RESET })
         }
 
-
-
     }, [dispatch, alert, error, productId, isDeleted, deleteError])
 
     const deleteReviewHandler = (id) => {
