@@ -614,3 +614,9 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+
+
+.d-block  {
+  height: 300px;
+  width: 200px;
+}

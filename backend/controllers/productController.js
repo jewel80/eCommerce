@@ -97,7 +97,7 @@ exports.getSingleProduct = catchAsyncErrors(async(req, res, next) => {
     })
 })
 
-//Get Single Product => /api/v1/product/:id
+//Get Details Product-ADMIN => /api/v1/product/:id
 exports.getSingleProductDetails = catchAsyncErrors(async(req, res, next) => {
     const product = await Product.findById(req.params.id);
     if (!product) {

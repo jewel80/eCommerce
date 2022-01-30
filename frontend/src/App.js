@@ -39,6 +39,7 @@ import ProcessOrder from './components/admin/ProcessOrder';
 import UsersList from './components/admin/UsersList';
 import UpdateUser from './components/admin/UpdateUser';
 import ProductReviews from './components/admin/ProductReviews';
+import SingleProductDetails from './components/admin/SingleProductDetails';
 
 import { loadUser } from './actions/userActions';
 import { useSelector } from 'react-redux';
@@ -50,6 +51,7 @@ import axios from 'axios';
 // Payment
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+
 
 
 
@@ -111,6 +113,7 @@ function App() {
           <ProtectedRoute path="/admin/products" isAdmin={true} component={ProductList} exact />
           <ProtectedRoute path="/admin/product" isAdmin={true} component={NewProduct} exact />
           <ProtectedRoute path="/admin/product/:id" isAdmin={true} component={UpdateProduct} exact />
+          <ProtectedRoute path="/admin/product/details/:id" isAdmin={true} component={SingleProductDetails} exact />
           <ProtectedRoute path="/admin/orders" isAdmin={true} component={OrdersList} exact />
           <ProtectedRoute path="/admin/order/:id" isAdmin={true} component={ProcessOrder} exact />
           <ProtectedRoute path="/admin/users" isAdmin={true} component={UsersList} exact />

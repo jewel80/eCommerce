@@ -78,8 +78,7 @@ const ProductsList = ({ history }) => {
                 price: `$${product.price}`,
                 stock: product.stock,
                 actions: <Fragment>
-                    <Link to={`/product/${product._id}`} className="btn btn-success py-1 px-2">
-                    {/* <Link to={`/admin/product/${product._id}`} className="btn btn-success py-1 px-2"> */}
+                    <Link to={`/admin/product/details/${product._id}`} className="btn btn-success py-1 px-2">
                         <i className="fa fa-eye"></i>
                     </Link> &ensp; 
                     <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2">
