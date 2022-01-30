@@ -19,6 +19,11 @@ import {
   UPDATE_PASSWORD_FAIL,
   UPDATE_PASSWORD_RESET,
 
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_RESET,
+  DELETE_USER_FAIL,
+
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
@@ -141,7 +146,7 @@ export const userReducer = (state = {}, action) => {
     case UPDATE_PROFILE_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
     // case UPDATE_USER_REQUEST:
-    // case DELETE_USER_REQUEST:
+    case DELETE_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -156,12 +161,12 @@ export const userReducer = (state = {}, action) => {
         isUpdated: action.payload,
       };
 
-    // case DELETE_USER_SUCCESS:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     isDeleted: action.payload,
-    //   };
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
 
     case UPDATE_PROFILE_RESET:
     case UPDATE_PASSWORD_RESET:
@@ -171,16 +176,16 @@ export const userReducer = (state = {}, action) => {
         isUpdated: false,
       };
 
-    // case DELETE_USER_RESET:
-    //   return {
-    //     ...state,
-    //     isDeleted: false,
-    //   };
+    case DELETE_USER_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
 
     case UPDATE_PROFILE_FAIL:
     case UPDATE_PASSWORD_FAIL:
     // case UPDATE_USER_FAIL:
-    // case DELETE_USER_FAIL:
+    case DELETE_USER_FAIL:
       return {
         ...state,
         loading: false,
