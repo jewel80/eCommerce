@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-
+import { Link } from 'react-router-dom'
 import MetaData from '../layout/MetaData'
 import Sidebar from './Sidebar'
 
@@ -125,6 +125,7 @@ const UpdateProduct = ({ match, history }) => {
     return (
         <Fragment>
             <MetaData title={'Update Product'} />
+            
             <div className="row">
                 <div className="col-12 col-md-2">
                     <Sidebar />
@@ -132,6 +133,11 @@ const UpdateProduct = ({ match, history }) => {
 
                 <div className="col-12 col-md-10">
                     <Fragment>
+                    <br></br>
+                    <Link to={`/admin/products`} className="btn btn-info py-1 px-2">
+                        <i class="fa fa-arrow-left" aria-hidden="true"> Back</i>
+
+                    </Link>
                         <div className="wrapper my-5">
                             <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
                                 <h1 className="mb-4">Update Product</h1>
