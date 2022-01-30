@@ -32,6 +32,10 @@ import {
   ALL_USERS_SUCCESS,
   ALL_USERS_FAIL,
 
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
@@ -265,6 +269,28 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_PASSWORD_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+// Get user details - ADMIN
+export const getUserDetails = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: USER_DETAILS_REQUEST })
+
+
+        const { data } = await axios.get(`/api/v1/admin/user/${id}`)
+        console.log(data.user);
+        dispatch({
+            type: USER_DETAILS_SUCCESS,
+            payload: data.user
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_DETAILS_FAIL,
             payload: error.response.data.message
         })
     }
